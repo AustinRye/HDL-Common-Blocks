@@ -1,22 +1,31 @@
 //
 // Author: Austin Rye <ryeaustinw@gmail.com>
 //
+// Name: Counter
 // Description:
-// Counter with the following specifications:
-//     - up/down counting
-//     - bit count
+// Fully customizable counter with the following features:
+//     - variable count bit width
+//     - sync/async reset control
 //
 
 module counter #(
-        parameter    COUNT_WIDTH = 8
+        parameter    COUNT_WIDTH = 8, // count bit width
+        parameter    ASYNC_RST   = 0  // enable async reset
     ) (
-        input  logic clk,
-        input  logic rst,
-        input  logic en,
-        output logic [COUNT_WIDTH-1:0] count
+        input  logic clk, // counter clock rate
+        input  logic rst, // reset, sync/async controlled by ASYNC_RST
+        input  logic en,  // enable counter
+        output logic [COUNT_WIDTH-1:0] count // count number
     );
 
-    always_ff @(posedge clk or posedge rst)
+    if (ASYNC_RST) begin
+        always_ff @(posedge rst)
+        begin
+            count <= 0;
+        end
+    end
+
+    always_ff @(posedge clk)
     begin
         if (rst)
             count <= 0;

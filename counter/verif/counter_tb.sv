@@ -1,15 +1,17 @@
 //
 // Author: Austin Rye <ryeaustinw@gmail.com>
 //
+// Name: Counter Testbench
 // Description:
-// Counter testbench
+// Counter verification testbench
 //
 
-`timescale 1ns / 100ps
+`timescale 1ns / 1ns
 
 module counter_tb;
 
 parameter   COUNT_WIDTH = 3;
+parameter   ASYNC_RST   = 1;
 
 logic clk;
 logic rst;
@@ -20,7 +22,8 @@ always
     #5 clk = ~clk;
 
 counter #(
-    .COUNT_WIDTH (COUNT_WIDTH)
+    .COUNT_WIDTH (COUNT_WIDTH),
+    .ASYNC_RST   (ASYNC_RST)
 ) counter_dut (
     .clk         (clk),
     .rst         (rst),
@@ -35,6 +38,9 @@ initial begin
     #20;
 
     rst = 0;
+    #102;
+
+    rst = 1;
     #10000;
 
     $display("Test complete");
