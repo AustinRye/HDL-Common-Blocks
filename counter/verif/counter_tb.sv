@@ -9,19 +9,23 @@
 
 module counter_tb;
 
-logic       clk;
-logic       rst;
-logic       en;
-logic [3:0] count;
+parameter   COUNT_WIDTH = 3;
+
+logic clk;
+logic rst;
+logic en;
+logic [COUNT_WIDTH-1:0] count;
 
 always
     #5 clk = ~clk;
 
-counter counter_dut (
-    .clk    (clk),
-    .rst    (rst),
-    .en     (en),
-    .count  (count)
+counter #(
+    .COUNT_WIDTH (COUNT_WIDTH)
+) counter_dut (
+    .clk         (clk),
+    .rst         (rst),
+    .en          (en),
+    .count       (count)
 );
 
 initial begin
