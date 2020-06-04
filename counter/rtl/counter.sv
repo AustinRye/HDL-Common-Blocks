@@ -1,12 +1,15 @@
-//
+////////////////////////////////////////////////////////////////////////////////
 // Author: Austin Rye <ryeaustinw@gmail.com>
 //
-// Name: Counter
+// Name: counter
 // Description:
 // Fully customizable counter with the following features:
 //     - variable count bit width
-//     - sync/async reset control
-//
+//     - sync/async and high/low reset control
+//     - start and end count with variable stepping
+//     - up/down counting
+//     - count loading
+////////////////////////////////////////////////////////////////////////////////
 
 module counter #(
         parameter    COUNT_WIDTH = 8, // count bit width
