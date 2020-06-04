@@ -12,6 +12,7 @@ module counter_tb;
 
 parameter   COUNT_WIDTH = 3;
 parameter   ASYNC_RST   = 1;
+parameter   LOW_RST     = 0;
 
 logic clk;
 logic rst;
@@ -23,7 +24,8 @@ always
 
 counter #(
     .COUNT_WIDTH (COUNT_WIDTH),
-    .ASYNC_RST   (ASYNC_RST)
+    .ASYNC_RST   (ASYNC_RST),
+    .LOW_RST     (LOW_RST)
 ) counter_dut (
     .clk         (clk),
     .rst         (rst),
