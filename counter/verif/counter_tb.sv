@@ -13,6 +13,8 @@ module counter_tb;
 parameter   COUNT_WIDTH = 3;
 parameter   ASYNC_RST   = 1;
 parameter   LOW_RST     = 0;
+parameter   COUNT_FROM  = 2;
+parameter   COUNT_TO    = 5;
 
 logic clk;
 logic rst;
@@ -23,14 +25,16 @@ always
     #5 clk = ~clk;
 
 counter #(
-    .COUNT_WIDTH (COUNT_WIDTH),
-    .ASYNC_RST   (ASYNC_RST),
-    .LOW_RST     (LOW_RST)
+     .COUNT_WIDTH (COUNT_WIDTH)
+    ,.ASYNC_RST   (ASYNC_RST)
+    ,.LOW_RST     (LOW_RST)
+    ,.COUNT_FROM  (COUNT_FROM)
+    ,.COUNT_TO    (COUNT_TO)
 ) counter_dut (
-    .clk         (clk),
-    .rst         (rst),
-    .en          (en),
-    .count       (count)
+     .clk         (clk)
+    ,.rst         (rst)
+    ,.en          (en)
+    ,.count       (count)
 );
 
 initial begin
@@ -40,9 +44,6 @@ initial begin
     #20;
 
     rst = 0;
-    #102;
-
-    rst = 1;
     #10000;
 
     $display("Test complete");

@@ -11,7 +11,9 @@
 module counter #(
         parameter    COUNT_WIDTH = 8, // count bit width
         parameter    ASYNC_RST   = 0, // enable async reset
-        parameter    LOW_RST     = 0  // enable active low reset
+        parameter    LOW_RST     = 0, // enable active low reset
+        parameter    COUNT_FROM  = 0, // start counting from the given number
+        parameter    COUNT_TO    = (2**COUNT_WIDTH)-1 // end counting at the given number
     ) (
         input  logic clk, // counter clock rate
         input  logic rst, // reset, sync/async controlled by ASYNC_RST
@@ -23,13 +25,13 @@ module counter #(
         if (LOW_RST) begin
             always_ff @(negedge rst)
             begin
-                count <= 0;
+                count <= COUNT_FROM;
             end
         end
         else begin
             always_ff @(posedge rst)
             begin
-                count <= 0;
+                count <= COUNT_FROM;
             end
         end
     end
@@ -37,9 +39,12 @@ module counter #(
     always_ff @(posedge clk)
     begin
         if ((!LOW_RST & rst) | (LOW_RST & !rst))
-            count <= 0;
+            count <= COUNT_FROM;
         else if (en)
-            count <= count + 1;
+            if (count == COUNT_TO)
+                count <= COUNT_FROM;
+            else
+                count <= count + 1;
     end
 
 endmodule
