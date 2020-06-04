@@ -9,7 +9,8 @@
 
 module clock_divider 
     #(
-        parameter ASYNC_RST = 0 // enable async reset
+        parameter ASYNC_RST = 0, // enable async reset
+        parameter LOW_RST   = 0  // enable active low reset
     ) (
         input  logic clk_in, // input clock rate
         input  logic rst,    // reset
@@ -19,10 +20,19 @@ module clock_divider
     logic [2:0] count;
 
     if (ASYNC_RST) begin
-        always_ff @(posedge rst)
-        begin
-            clk_out <= 0;
-            count <= 0;
+        if (LOW_RST) begin
+            always_ff @(negedge rst)
+            begin
+                clk_out <= 0;
+                count <= 0;
+            end
+        end
+        else begin
+            always_ff @(posedge rst)
+            begin
+                clk_out <= 0;
+                count <= 0;
+            end
         end
     end
 

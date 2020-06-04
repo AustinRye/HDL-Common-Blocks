@@ -11,6 +11,7 @@
 module clock_divider_tb;
 
 parameter ASYNC_RST = 1;
+parameter LOW_RST   = 0;
 
 logic clk_in;
 logic rst;
@@ -20,7 +21,8 @@ always
     #5 clk_in = ~clk_in;
 
 clock_divider #(
-    .ASYNC_RST    (ASYNC_RST)
+     .ASYNC_RST   (ASYNC_RST)
+    ,.LOW_RST     (LOW_RST)
 ) clock_divider_dut (
      .clk_in      (clk_in)
     ,.rst         (rst)
