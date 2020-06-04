@@ -7,7 +7,10 @@
 // frequency output clock
 ////////////////////////////////////////////////////////////////////////////////
 
-module clock_divider (
+module clock_divider 
+    #(
+        parameter ASYNC_RST = 0 // enable async reset
+    ) (
         input  logic clk_in, // input clock rate
         input  logic rst,    // reset
         output logic clk_out // output clock rate
@@ -15,7 +18,15 @@ module clock_divider (
 
     logic [2:0] count;
 
-    always_ff @(posedge clk_in or posedge rst)
+    if (ASYNC_RST) begin
+        always_ff @(posedge rst)
+        begin
+            clk_out <= 0;
+            count <= 0;
+        end
+    end
+
+    always_ff @(posedge clk_in)
         if (rst)
         begin
             clk_out <= 0;

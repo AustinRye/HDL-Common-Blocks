@@ -10,6 +10,8 @@
 
 module clock_divider_tb;
 
+parameter ASYNC_RST = 1;
+
 logic clk_in;
 logic rst;
 logic clk_out;
@@ -17,7 +19,9 @@ logic clk_out;
 always
     #5 clk_in = ~clk_in;
 
-clock_divider clock_divider_dut (
+clock_divider #(
+    .ASYNC_RST    (ASYNC_RST)
+) clock_divider_dut (
      .clk_in      (clk_in)
     ,.rst         (rst)
     ,.clk_out     (clk_out)
@@ -29,6 +33,9 @@ initial begin
     #30;
 
     rst = 0;
+    #18;
+
+    rst = 1;
 
     #10000;
 

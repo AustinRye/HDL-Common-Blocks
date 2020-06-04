@@ -11,7 +11,8 @@
 //     - count loading
 ////////////////////////////////////////////////////////////////////////////////
 
-module counter #(
+module counter
+    #(
         parameter    COUNT_WIDTH = 8, // count bit width
         parameter    ASYNC_RST   = 0, // enable async reset
         parameter    LOW_RST     = 0, // enable active low reset
