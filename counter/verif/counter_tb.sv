@@ -10,15 +10,17 @@
 
 module counter_tb;
 
-parameter   COUNT_WIDTH = 3;
+parameter   COUNT_WIDTH = 4;
 parameter   ASYNC_RST   = 1;
 parameter   LOW_RST     = 0;
-parameter   COUNT_FROM  = 2;
-parameter   COUNT_TO    = 5;
+parameter   COUNT_START = 2;
+parameter   COUNT_END   = 11;
+parameter   COUNT_STEP  = 2;
 
 logic clk;
 logic rst;
 logic en;
+logic up_down;
 logic load_en;
 logic [COUNT_WIDTH-1:0] load_count;
 logic [COUNT_WIDTH-1:0] count;
@@ -30,12 +32,14 @@ counter #(
      .COUNT_WIDTH (COUNT_WIDTH)
     ,.ASYNC_RST   (ASYNC_RST)
     ,.LOW_RST     (LOW_RST)
-    ,.COUNT_FROM  (COUNT_FROM)
-    ,.COUNT_TO    (COUNT_TO)
+    ,.COUNT_START (COUNT_START)
+    ,.COUNT_END   (COUNT_END)
+    ,.COUNT_STEP  (COUNT_STEP)
 ) counter_dut (
      .clk         (clk)
     ,.rst         (rst)
     ,.en          (en)
+    ,.up_down     (up_down)
     ,.load_en     (load_en)
     ,.load_count  (load_count)
     ,.count       (count)
@@ -45,18 +49,16 @@ initial begin
     clk = 0;
     rst = 1;
     en = 1;
+    up_down = 1;
     load_en = 0;
     load_count = 0;
     #10;
 
     rst = 0;
-    #100
+    #290
 
-    load_en = 1;
-    load_count = 5;
-    #20;
-
-    load_en = 0;
+    up_down = 0;
+    #300;
 
     #10000;
 
