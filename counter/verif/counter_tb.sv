@@ -19,6 +19,8 @@ parameter   COUNT_TO    = 5;
 logic clk;
 logic rst;
 logic en;
+logic load_en;
+logic [COUNT_WIDTH-1:0] load_count;
 logic [COUNT_WIDTH-1:0] count;
 
 always
@@ -34,6 +36,8 @@ counter #(
      .clk         (clk)
     ,.rst         (rst)
     ,.en          (en)
+    ,.load_en     (load_en)
+    ,.load_count  (load_count)
     ,.count       (count)
 );
 
@@ -41,9 +45,19 @@ initial begin
     clk = 0;
     rst = 1;
     en = 1;
-    #20;
+    load_en = 0;
+    load_count = 0;
+    #10;
 
     rst = 0;
+    #100
+
+    load_en = 1;
+    load_count = 5;
+    #20;
+
+    load_en = 0;
+
     #10000;
 
     $display("Test complete");
