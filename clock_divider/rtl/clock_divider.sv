@@ -39,7 +39,7 @@ module clock_divider
     end
 
     always_ff @(posedge clk_in)
-        if (rst)
+        if ((!LOW_RST & rst) | (LOW_RST & !rst))
         begin
             clk_out <= 0;
             count <= 0;
