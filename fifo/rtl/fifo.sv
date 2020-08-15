@@ -21,9 +21,9 @@ module fifo
         output logic full   // full flag
     );
 
-    logic [WIDTH-1:0] mem [0:DEPTH];  // memory
-    logic [$clog2(DEPTH):0] wr_ptr; // write pointer
-    logic [$clog2(DEPTH):0] rd_ptr; // read pointer
+    logic [WIDTH-1:0] mem [0:DEPTH-1];  // memory
+    logic [$clog2(DEPTH-1):0] wr_ptr; // write pointer
+    logic [$clog2(DEPTH-1):0] rd_ptr; // read pointer
     
     always_ff @(posedge clk or negedge rstn)
         if (!rstn)
@@ -40,7 +40,7 @@ module fifo
             begin
                 mem[wr_ptr] <= data_in;
                 empty <= 0;
-                wr_ptr <= (wr_ptr + 1) % DEPTH;
+                wr_ptr = (wr_ptr + 1) % DEPTH;
                 if (wr_ptr == rd_ptr)
                     full <= 1;
             end
@@ -48,7 +48,7 @@ module fifo
             begin
                 data_out <= mem[rd_ptr];
                 full <= 0;
-                rd_ptr <= (rd_ptr + 1) % DEPTH;
+                rd_ptr = (rd_ptr + 1) % DEPTH;
                 if (wr_ptr == rd_ptr)
                     empty <= 1;
             end
