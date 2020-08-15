@@ -21,11 +21,11 @@ module fifo
         output logic full   // full flag
     );
 
-    logic [WIDTH-1] mem [0:DEPTH];  // memory
+    logic [WIDTH-1:0] mem [0:DEPTH];  // memory
     logic [$clog2(DEPTH):0] wr_ptr; // write pointer
     logic [$clog2(DEPTH):0] rd_ptr; // read pointer
     
-    always_ff @(posedge clk)
+  	always_ff @(posedge clk)
         if (!rstn)
         begin
             data_out <= 0;
