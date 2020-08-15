@@ -25,7 +25,7 @@ module fifo
     logic [$clog2(DEPTH):0] wr_ptr; // write pointer
     logic [$clog2(DEPTH):0] rd_ptr; // read pointer
     
-  	always_ff @(posedge clk)
+    always_ff @(posedge clk or negedge rstn)
         if (!rstn)
         begin
             data_out <= 0;
